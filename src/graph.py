@@ -1,4 +1,4 @@
-from models import Station
+from src.models import Station
 import json
 
 class graph:
