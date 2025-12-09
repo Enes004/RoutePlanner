@@ -1,5 +1,6 @@
 from src.models import Station
 import json
+import heapq
 
 class graph:
     def __init__(self):
@@ -43,4 +44,38 @@ class graph:
         for s in data["stations"]:
             sid = s["id"]
             for n in s["neighbors"]:
-                self.add_route(sid, n["id"], n["duration"])           
+                self.add_route(sid, n["id"], n["duration"])     
+
+    def shortest_path(self, start_node, end_node):
+        distances = {node: float('inf') for node in self.adj_list}
+        distances[start_node] = 0
+
+        previous_nodes = {node: None for node in self.adj_list}
+
+        priority_queue_list = [(0, start_node)]
+
+        while priority_queue_list:
+            curr_weight, curr_node = heapq.heappop(priority_queue_list)
+
+            if curr_weight > distances[curr_node]:
+                continue
+
+            if curr_node == end_node:
+                break
+
+            for neighbor, weight in self.adj_list[curr_node].items():
+                new_dist = curr_weight + weight
+
+                if new_dist < distances[neighbor]:
+                    distances[neighbor] = new_dist
+                    previous_nodes[neighbor] = curr_node
+                    heapq.heappush(priority_queue_list, (new_dist, neighbor))
+
+        path = []
+        node = end_node
+        while node is not None:
+            path.append(node)
+            node = previous_nodes[node]
+
+        path.reverse()
+        return path, distances[end_node]        
