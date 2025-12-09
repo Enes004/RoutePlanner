@@ -3,8 +3,8 @@
     {
       "id": 1,
       "name": "Kadikoy",
-      "x": 5,
-      "y": 5,
+      "x_loc": 5,
+      "y_loc": 5,
       "neighbors": [
         { "id": 2, "duration": 4 }
       ]
@@ -12,8 +12,8 @@
     {
       "id": 2,
       "name": "Ayrilik Cesmesi",
-      "x": 8,
-      "y": 6,
+      "x_loc": 8,
+      "y_loc": 6,
       "neighbors": [
         { "id": 1, "duration": 4 },
         { "id": 3, "duration": 3 }
@@ -22,8 +22,8 @@
     {
       "id": 3,
       "name": "Acibadem",
-      "x": 12,
-      "y": 7,
+      "x_loc": 12,
+      "y_loc": 7,
       "neighbors": [
         { "id": 2, "duration": 3 },
         { "id": 4, "duration": 5 }
@@ -32,8 +32,8 @@
     {
       "id": 4,
       "name": "Unalan",
-      "x": 15,
-      "y": 8,
+      "x_loc": 15,
+      "y_loc": 8,
       "neighbors": [
         { "id": 3, "duration": 5 }
       ]
