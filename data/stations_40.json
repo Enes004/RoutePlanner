@@ -1,0 +1,788 @@
+{
+    "stations": [
+        {
+            "id": 1,
+            "name": "Station 1",
+            "x_loc": 81,
+            "y_loc": 75,
+            "neighbors": [
+                {
+                    "id": 4,
+                    "duration": 10
+                },
+                {
+                    "id": 17,
+                    "duration": 5
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "Station 2",
+            "x_loc": 62,
+            "y_loc": 49,
+            "neighbors": [
+                {
+                    "id": 39,
+                    "duration": 13
+                },
+                {
+                    "id": 30,
+                    "duration": 4
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "name": "Station 3",
+            "x_loc": 98,
+            "y_loc": 73,
+            "neighbors": [
+                {
+                    "id": 19,
+                    "duration": 7
+                },
+                {
+                    "id": 21,
+                    "duration": 15
+                },
+                {
+                    "id": 32,
+                    "duration": 12
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "name": "Station 4",
+            "x_loc": 74,
+            "y_loc": 49,
+            "neighbors": [
+                {
+                    "id": 37,
+                    "duration": 6
+                },
+                {
+                    "id": 28,
+                    "duration": 4
+                },
+                {
+                    "id": 27,
+                    "duration": 2
+                },
+                {
+                    "id": 12,
+                    "duration": 15
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "name": "Station 5",
+            "x_loc": 5,
+            "y_loc": 67,
+            "neighbors": [
+                {
+                    "id": 33,
+                    "duration": 14
+                },
+                {
+                    "id": 13,
+                    "duration": 8
+                },
+                {
+                    "id": 34,
+                    "duration": 14
+                },
+                {
+                    "id": 8,
+                    "duration": 15
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "name": "Station 6",
+            "x_loc": 66,
+            "y_loc": 19,
+            "neighbors": [
+                {
+                    "id": 11,
+                    "duration": 9
+                },
+                {
+                    "id": 36,
+                    "duration": 11
+                },
+                {
+                    "id": 18,
+                    "duration": 2
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "name": "Station 7",
+            "x_loc": 83,
+            "y_loc": 47,
+            "neighbors": [
+                {
+                    "id": 35,
+                    "duration": 3
+                },
+                {
+                    "id": 18,
+                    "duration": 15
+                },
+                {
+                    "id": 2,
+                    "duration": 10
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "name": "Station 8",
+            "x_loc": 70,
+            "y_loc": 23,
+            "neighbors": [
+                {
+                    "id": 21,
+                    "duration": 10
+                },
+                {
+                    "id": 17,
+                    "duration": 14
+                },
+                {
+                    "id": 34,
+                    "duration": 3
+                }
+            ]
+        },
+        {
+            "id": 9,
+            "name": "Station 9",
+            "x_loc": 46,
+            "y_loc": 42,
+            "neighbors": [
+                {
+                    "id": 20,
+                    "duration": 12
+                },
+                {
+                    "id": 17,
+                    "duration": 6
+                },
+                {
+                    "id": 36,
+                    "duration": 10
+                }
+            ]
+        },
+        {
+            "id": 10,
+            "name": "Station 10",
+            "x_loc": 78,
+            "y_loc": 6,
+            "neighbors": [
+                {
+                    "id": 31,
+                    "duration": 9
+                },
+                {
+                    "id": 21,
+                    "duration": 15
+                },
+                {
+                    "id": 5,
+                    "duration": 4
+                },
+                {
+                    "id": 11,
+                    "duration": 12
+                }
+            ]
+        },
+        {
+            "id": 11,
+            "name": "Station 11",
+            "x_loc": 44,
+            "y_loc": 41,
+            "neighbors": [
+                {
+                    "id": 40,
+                    "duration": 8
+                },
+                {
+                    "id": 12,
+                    "duration": 14
+                },
+                {
+                    "id": 3,
+                    "duration": 9
+                },
+                {
+                    "id": 2,
+                    "duration": 14
+                }
+            ]
+        },
+        {
+            "id": 12,
+            "name": "Station 12",
+            "x_loc": 94,
+            "y_loc": 63,
+            "neighbors": [
+                {
+                    "id": 9,
+                    "duration": 9
+                },
+                {
+                    "id": 21,
+                    "duration": 2
+                }
+            ]
+        },
+        {
+            "id": 13,
+            "name": "Station 13",
+            "x_loc": 46,
+            "y_loc": 15,
+            "neighbors": [
+                {
+                    "id": 3,
+                    "duration": 6
+                },
+                {
+                    "id": 28,
+                    "duration": 15
+                },
+                {
+                    "id": 34,
+                    "duration": 3
+                },
+                {
+                    "id": 21,
+                    "duration": 15
+                }
+            ]
+        },
+        {
+            "id": 14,
+            "name": "Station 14",
+            "x_loc": 18,
+            "y_loc": 30,
+            "neighbors": [
+                {
+                    "id": 6,
+                    "duration": 4
+                },
+                {
+                    "id": 36,
+                    "duration": 13
+                }
+            ]
+        },
+        {
+            "id": 15,
+            "name": "Station 15",
+            "x_loc": 24,
+            "y_loc": 68,
+            "neighbors": [
+                {
+                    "id": 25,
+                    "duration": 10
+                },
+                {
+                    "id": 18,
+                    "duration": 11
+                },
+                {
+                    "id": 33,
+                    "duration": 15
+                },
+                {
+                    "id": 24,
+                    "duration": 11
+                }
+            ]
+        },
+        {
+            "id": 16,
+            "name": "Station 16",
+            "x_loc": 22,
+            "y_loc": 4,
+            "neighbors": [
+                {
+                    "id": 18,
+                    "duration": 15
+                },
+                {
+                    "id": 9,
+                    "duration": 4
+                },
+                {
+                    "id": 17,
+                    "duration": 10
+                }
+            ]
+        },
+        {
+            "id": 17,
+            "name": "Station 17",
+            "x_loc": 70,
+            "y_loc": 79,
+            "neighbors": [
+                {
+                    "id": 6,
+                    "duration": 2
+                },
+                {
+                    "id": 40,
+                    "duration": 13
+                },
+                {
+                    "id": 25,
+                    "duration": 13
+                },
+                {
+                    "id": 12,
+                    "duration": 2
+                }
+            ]
+        },
+        {
+            "id": 18,
+            "name": "Station 18",
+            "x_loc": 40,
+            "y_loc": 85,
+            "neighbors": [
+                {
+                    "id": 25,
+                    "duration": 14
+                },
+                {
+                    "id": 19,
+                    "duration": 12
+                },
+                {
+                    "id": 24,
+                    "duration": 10
+                }
+            ]
+        },
+        {
+            "id": 19,
+            "name": "Station 19",
+            "x_loc": 97,
+            "y_loc": 65,
+            "neighbors": [
+                {
+                    "id": 14,
+                    "duration": 8
+                },
+                {
+                    "id": 21,
+                    "duration": 14
+                }
+            ]
+        },
+        {
+            "id": 20,
+            "name": "Station 20",
+            "x_loc": 41,
+            "y_loc": 49,
+            "neighbors": [
+                {
+                    "id": 16,
+                    "duration": 15
+                },
+                {
+                    "id": 6,
+                    "duration": 8
+                },
+                {
+                    "id": 26,
+                    "duration": 14
+                }
+            ]
+        },
+        {
+            "id": 21,
+            "name": "Station 21",
+            "x_loc": 77,
+            "y_loc": 23,
+            "neighbors": [
+                {
+                    "id": 37,
+                    "duration": 9
+                },
+                {
+                    "id": 23,
+                    "duration": 3
+                },
+                {
+                    "id": 4,
+                    "duration": 14
+                }
+            ]
+        },
+        {
+            "id": 22,
+            "name": "Station 22",
+            "x_loc": 9,
+            "y_loc": 20,
+            "neighbors": [
+                {
+                    "id": 11,
+                    "duration": 13
+                },
+                {
+                    "id": 12,
+                    "duration": 15
+                },
+                {
+                    "id": 6,
+                    "duration": 3
+                }
+            ]
+        },
+        {
+            "id": 23,
+            "name": "Station 23",
+            "x_loc": 17,
+            "y_loc": 25,
+            "neighbors": [
+                {
+                    "id": 4,
+                    "duration": 7
+                },
+                {
+                    "id": 29,
+                    "duration": 12
+                }
+            ]
+        },
+        {
+            "id": 24,
+            "name": "Station 24",
+            "x_loc": 7,
+            "y_loc": 81,
+            "neighbors": [
+                {
+                    "id": 22,
+                    "duration": 8
+                },
+                {
+                    "id": 32,
+                    "duration": 13
+                }
+            ]
+        },
+        {
+            "id": 25,
+            "name": "Station 25",
+            "x_loc": 63,
+            "y_loc": 84,
+            "neighbors": [
+                {
+                    "id": 19,
+                    "duration": 15
+                },
+                {
+                    "id": 15,
+                    "duration": 8
+                }
+            ]
+        },
+        {
+            "id": 26,
+            "name": "Station 26",
+            "x_loc": 40,
+            "y_loc": 85,
+            "neighbors": [
+                {
+                    "id": 22,
+                    "duration": 4
+                },
+                {
+                    "id": 25,
+                    "duration": 6
+                },
+                {
+                    "id": 11,
+                    "duration": 11
+                }
+            ]
+        },
+        {
+            "id": 27,
+            "name": "Station 27",
+            "x_loc": 66,
+            "y_loc": 56,
+            "neighbors": [
+                {
+                    "id": 19,
+                    "duration": 9
+                },
+                {
+                    "id": 21,
+                    "duration": 6
+                },
+                {
+                    "id": 34,
+                    "duration": 3
+                },
+                {
+                    "id": 39,
+                    "duration": 8
+                }
+            ]
+        },
+        {
+            "id": 28,
+            "name": "Station 28",
+            "x_loc": 19,
+            "y_loc": 71,
+            "neighbors": [
+                {
+                    "id": 30,
+                    "duration": 2
+                },
+                {
+                    "id": 24,
+                    "duration": 12
+                }
+            ]
+        },
+        {
+            "id": 29,
+            "name": "Station 29",
+            "x_loc": 25,
+            "y_loc": 91,
+            "neighbors": [
+                {
+                    "id": 11,
+                    "duration": 2
+                },
+                {
+                    "id": 14,
+                    "duration": 2
+                },
+                {
+                    "id": 37,
+                    "duration": 9
+                }
+            ]
+        },
+        {
+            "id": 30,
+            "name": "Station 30",
+            "x_loc": 94,
+            "y_loc": 3,
+            "neighbors": [
+                {
+                    "id": 27,
+                    "duration": 5
+                },
+                {
+                    "id": 34,
+                    "duration": 10
+                },
+                {
+                    "id": 19,
+                    "duration": 5
+                },
+                {
+                    "id": 10,
+                    "duration": 6
+                }
+            ]
+        },
+        {
+            "id": 31,
+            "name": "Station 31",
+            "x_loc": 59,
+            "y_loc": 46,
+            "neighbors": [
+                {
+                    "id": 3,
+                    "duration": 8
+                },
+                {
+                    "id": 8,
+                    "duration": 6
+                }
+            ]
+        },
+        {
+            "id": 32,
+            "name": "Station 32",
+            "x_loc": 13,
+            "y_loc": 62,
+            "neighbors": [
+                {
+                    "id": 27,
+                    "duration": 2
+                },
+                {
+                    "id": 39,
+                    "duration": 12
+                },
+                {
+                    "id": 38,
+                    "duration": 11
+                },
+                {
+                    "id": 15,
+                    "duration": 12
+                }
+            ]
+        },
+        {
+            "id": 33,
+            "name": "Station 33",
+            "x_loc": 11,
+            "y_loc": 100,
+            "neighbors": [
+                {
+                    "id": 25,
+                    "duration": 3
+                },
+                {
+                    "id": 19,
+                    "duration": 13
+                }
+            ]
+        },
+        {
+            "id": 34,
+            "name": "Station 34",
+            "x_loc": 58,
+            "y_loc": 87,
+            "neighbors": [
+                {
+                    "id": 12,
+                    "duration": 15
+                },
+                {
+                    "id": 37,
+                    "duration": 10
+                }
+            ]
+        },
+        {
+            "id": 35,
+            "name": "Station 35",
+            "x_loc": 36,
+            "y_loc": 27,
+            "neighbors": [
+                {
+                    "id": 40,
+                    "duration": 13
+                },
+                {
+                    "id": 18,
+                    "duration": 10
+                },
+                {
+                    "id": 4,
+                    "duration": 10
+                }
+            ]
+        },
+        {
+            "id": 36,
+            "name": "Station 36",
+            "x_loc": 32,
+            "y_loc": 1,
+            "neighbors": [
+                {
+                    "id": 3,
+                    "duration": 2
+                },
+                {
+                    "id": 28,
+                    "duration": 10
+                }
+            ]
+        },
+        {
+            "id": 37,
+            "name": "Station 37",
+            "x_loc": 92,
+            "y_loc": 88,
+            "neighbors": [
+                {
+                    "id": 3,
+                    "duration": 7
+                },
+                {
+                    "id": 10,
+                    "duration": 6
+                }
+            ]
+        },
+        {
+            "id": 38,
+            "name": "Station 38",
+            "x_loc": 50,
+            "y_loc": 16,
+            "neighbors": [
+                {
+                    "id": 10,
+                    "duration": 2
+                },
+                {
+                    "id": 7,
+                    "duration": 12
+                },
+                {
+                    "id": 27,
+                    "duration": 12
+                },
+                {
+                    "id": 6,
+                    "duration": 12
+                }
+            ]
+        },
+        {
+            "id": 39,
+            "name": "Station 39",
+            "x_loc": 10,
+            "y_loc": 3,
+            "neighbors": [
+                {
+                    "id": 29,
+                    "duration": 10
+                },
+                {
+                    "id": 31,
+                    "duration": 3
+                }
+            ]
+        },
+        {
+            "id": 40,
+            "name": "Station 40",
+            "x_loc": 34,
+            "y_loc": 18,
+            "neighbors": [
+                {
+                    "id": 37,
+                    "duration": 9
+                },
+                {
+                    "id": 27,
+                    "duration": 8
+                },
+                {
+                    "id": 14,
+                    "duration": 4
+                }
+            ]
+        }
+    ]
+}

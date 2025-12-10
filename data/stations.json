@@ -1,42 +1,25 @@
 {
   "stations": [
-    {
-      "id": 1,
-      "name": "Kadikoy",
-      "x_loc": 5,
-      "y_loc": 5,
-      "neighbors": [
-        { "id": 2, "duration": 4 }
-      ]
-    },
-    {
-      "id": 2,
-      "name": "Ayrilik Cesmesi",
-      "x_loc": 8,
-      "y_loc": 6,
-      "neighbors": [
-        { "id": 1, "duration": 4 },
-        { "id": 3, "duration": 3 }
-      ]
-    },
-    {
-      "id": 3,
-      "name": "Acibadem",
-      "x_loc": 12,
-      "y_loc": 7,
-      "neighbors": [
-        { "id": 2, "duration": 3 },
-        { "id": 4, "duration": 5 }
-      ]
-    },
-    {
-      "id": 4,
-      "name": "Unalan",
-      "x_loc": 15,
-      "y_loc": 8,
-      "neighbors": [
-        { "id": 3, "duration": 5 }
-      ]
-    }
+    { "id": 1, "name": "Kadikoy", "x_loc": 2, "y_loc": 2, "neighbors": [{ "id": 2, "duration": 3 }] },
+    { "id": 2, "name": "Ayrilik Cesmesi", "x_loc": 4, "y_loc": 4, "neighbors": [{ "id": 1, "duration": 3 }, { "id": 3, "duration": 2 }, { "id": 5, "duration": 4 }, { "id": 9, "duration": 3 }] },
+    { "id": 3, "name": "Acibadem", "x_loc": 6, "y_loc": 3, "neighbors": [{ "id": 2, "duration": 2 }, { "id": 4, "duration": 3 }] },
+    { "id": 4, "name": "Unalan", "x_loc": 8, "y_loc": 3, "neighbors": [{ "id": 3, "duration": 3 }, { "id": 10, "duration": 4 }, { "id": 13, "duration": 5 }] },
+    { "id": 5, "name": "Uskudar", "x_loc": 3, "y_loc": 8, "neighbors": [{ "id": 2, "duration": 4 }, { "id": 6, "duration": 2 }] },
+    { "id": 6, "name": "Fistikagaci", "x_loc": 5, "y_loc": 9, "neighbors": [{ "id": 5, "duration": 2 }, { "id": 7, "duration": 2 }] },
+    { "id": 7, "name": "Baglarbasi", "x_loc": 7, "y_loc": 9, "neighbors": [{ "id": 6, "duration": 2 }, { "id": 8, "duration": 3 }] },
+    { "id": 8, "name": "Altunizade", "x_loc": 9, "y_loc": 8, "neighbors": [{ "id": 7, "duration": 3 }, { "id": 13, "duration": 6 }] },
+    { "id": 9, "name": "Sogutlucesme", "x_loc": 5, "y_loc": 1, "neighbors": [{ "id": 2, "duration": 3 }, { "id": 10, "duration": 5 }] },
+    { "id": 10, "name": "Goztepe", "x_loc": 9, "y_loc": 2, "neighbors": [{ "id": 4, "duration": 4 }, { "id": 9, "duration": 5 }, { "id": 11, "duration": 3 }] },
+    { "id": 11, "name": "Yenisahra", "x_loc": 11, "y_loc": 3, "neighbors": [{ "id": 10, "duration": 3 }, { "id": 12, "duration": 4 }, { "id": 17, "duration": 3 }] },
+    { "id": 12, "name": "Bostanci", "x_loc": 13, "y_loc": 2, "neighbors": [{ "id": 11, "duration": 4 }, { "id": 17, "duration": 4 }] },
+    { "id": 13, "name": "Kisikli", "x_loc": 10, "y_loc": 7, "neighbors": [{ "id": 8, "duration": 6 }, { "id": 4, "duration": 5 }, { "id": 14, "duration": 3 }] },
+    { "id": 14, "name": "Bulgurlu", "x_loc": 12, "y_loc": 8, "neighbors": [{ "id": 13, "duration": 3 }, { "id": 15, "duration": 3 }] },
+    { "id": 15, "name": "Umraniye", "x_loc": 14, "y_loc": 9, "neighbors": [{ "id": 14, "duration": 3 }, { "id": 16, "duration": 4 }] },
+    { "id": 16, "name": "Carsi", "x_loc": 16, "y_loc": 9, "neighbors": [{ "id": 15, "duration": 4 }, { "id": 20, "duration": 5 }] },
+    { "id": 17, "name": "Kozyatagi", "x_loc": 12, "y_loc": 3, "neighbors": [{ "id": 11, "duration": 3 }, { "id": 12, "duration": 4 }, { "id": 18, "duration": 4 }, { "id": 20, "duration": 8 }] },
+    { "id": 18, "name": "Maltepe", "x_loc": 15, "y_loc": 2, "neighbors": [{ "id": 17, "duration": 4 }, { "id": 19, "duration": 5 }] },
+    { "id": 19, "name": "Kartal", "x_loc": 18, "y_loc": 1, "neighbors": [{ "id": 18, "duration": 5 }] },
+    { "id": 20, "name": "Dudullu", "x_loc": 17, "y_loc": 8, "neighbors": [{ "id": 16, "duration": 5 }, { "id": 17, "duration": 8 }, { "id": 21, "duration": 4 }] },
+    { "id": 21, "name": "Cekmekoy", "x_loc": 19, "y_loc": 9, "neighbors": [{ "id": 20, "duration": 4 }] }
   ]
 }
