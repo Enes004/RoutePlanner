@@ -118,7 +118,7 @@ def find_path():
         start_id = name_to_id[s_name]
         end_id = name_to_id[e_name]
 
-        # Senin graph.py içindeki metodun: return path, distances[end_node]
+        # Senin graph.py içindeki metodun: return path, distances[end_node].
         path, cost = g.shortest_path(start_id, end_id)
 
         if cost == float('inf'):
