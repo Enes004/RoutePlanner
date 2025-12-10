@@ -1,7 +1,7 @@
 {
   "stations": [
-    { "id": 501, "name": "Uskudar (M5)", "x_loc": 2, "y_loc": 16, "neighbors": [{ "id": 502, "duration": 2 }, { "id": 201, "duration": 5 }] },
-    { "id": 502, "name": "Baglarbasi", "x_loc": 6, "y_loc": 16, "neighbors": [{ "id": 501, "duration": 2 }, { "id": 503, "duration": 3 }] },
+    { "id": 501, "name": "Uskudar (M5)", "x_loc": 2, "y_loc": 16, "neighbors": [{ "id": 502, "duration": 5}, { "id": 201, "duration": 5 }] },
+    { "id": 502, "name": "Baglarbasi", "x_loc": 6, "y_loc": 16, "neighbors": [{ "id": 501, "duration": 5 }, { "id": 503, "duration": 3 }] },
     { "id": 503, "name": "Altunizade", "x_loc": 8, "y_loc": 16, "neighbors": [{ "id": 502, "duration": 3 }, { "id": 504, "duration": 3 }] },
     { "id": 504, "name": "Bulgurlu", "x_loc": 11, "y_loc": 16, "neighbors": [{ "id": 503, "duration": 3 }, { "id": 505, "duration": 3 }] },
     { "id": 505, "name": "Umraniye", "x_loc": 12, "y_loc": 16, "neighbors": [{ "id": 504, "duration": 3 }, { "id": 506, "duration": 2 }] },
