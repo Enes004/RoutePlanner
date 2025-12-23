@@ -10,7 +10,7 @@ class StationSearcher:
         right = len(sorted_list)-1
 
         while (left <= right):
-            mid = len(sorted_list)//2
+            mid = (left+right)//2
             current_station = sorted_list[mid]
             current_name = current_station.name.lower()
 
@@ -22,7 +22,7 @@ class StationSearcher:
 
             else:
                 right = mid-1
-                
+
         return None
 
 
