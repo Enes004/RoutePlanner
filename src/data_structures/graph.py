@@ -1,7 +1,7 @@
 from src.models import Station
 import json
 
-class Graph: # Sınıf ismini standartlara uygun olarak büyük harfle başlattık
+class Graph: 
     def __init__(self):
         self.adj_list = {}
         self.stations = {}
