@@ -1,6 +1,8 @@
 
-
-class StationSorter(self):
+class StationSorter:
+    def __init__(self):
+        pass
+    
     def quick_sort_stations(self,stations_in_json):
 
         if len(stations_in_json)<=1:
