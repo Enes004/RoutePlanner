@@ -1,143 +1,251 @@
 import tkinter as tk
 from tkinter import ttk
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import matplotlib.pyplot as plt
-from src.graph import graph  # Senin graph sınıfını çekiyoruz
+# Matplotlib'in backend'ini ayarlıyoruz ki çökme yapmasın
+import matplotlib
+matplotlib.use("TkAgg") 
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from matplotlib.figure import Figure
 
-# --- AYARLAR ---
-plt.style.use('dark_background')  # Matplotlib karanlık mod
+# --- KENDİ YAPILARIMIZI ÇEKİYORUZ ---
+from src.data_structures.graph import Graph
+from src.data_structures.trie import Trie
+from src.data_structures.stack import Stack
+from src.algorithms.pathfinding_dijkstra import PathFinder
+from src.algorithms.bfs_pathfinding import find_path_bfs
+from src.utils.data_loader import load_metro_data
 
-# 1. Grafiği Burada Oluşturuyoruz (Main.py buradan çekecek)
-g = graph()
-g.load_from_json("data/stations.json")
+class MetroUI:
+    def __init__(self, root):
+        self.root = root
+        self.root.title("İstanbul Metro - AI Route Planner")
+        self.root.geometry("1400x900")
+        self.root.configure(bg='black')
 
-# 2. Ana Pencere Ayarları
-root = tk.Tk()
-root.title("Istanbul Metro Route Planner")
-root.configure(bg='black')  # Arka plan siyah
-root.geometry("1300x850")
-
-# Değişkenler
-start_var = tk.StringVar()
-end_var = tk.StringVar()
-
-# İstasyon isimlerini al ve sırala
-# Senin graph yapında stations bir sözlük {id: StationObj}
-station_names = sorted([s.name for s in g.stations.values()])
-# İsimden ID bulmak için ters sözlük
-name_to_id = {s.name: s.id for s in g.stations.values()}
-
-# --- ÜST PANEL (SEÇİMLER) ---
-top_frame = tk.Frame(root, bg='black')
-top_frame.pack(side=tk.TOP, fill=tk.X, pady=20)
-
-# Start Label & Combo
-lbl_start = tk.Label(top_frame, text="BAŞLANGIÇ DURAĞI:", font=("Arial", 14, "bold"), fg="red", bg="black")
-lbl_start.pack(side=tk.LEFT, padx=20)
-
-start_combo = ttk.Combobox(top_frame, values=station_names, textvariable=start_var, width=25, font=("Arial", 11))
-start_combo.pack(side=tk.LEFT, padx=5)
-
-# End Label & Combo
-lbl_end = tk.Label(top_frame, text="BİTİŞ DURAĞI:", font=("Arial", 14, "bold"), fg="red", bg="black")
-lbl_end.pack(side=tk.LEFT, padx=20)
-
-end_combo = ttk.Combobox(top_frame, values=station_names, textvariable=end_var, width=25, font=("Arial", 11))
-end_combo.pack(side=tk.LEFT, padx=5)
-
-# Sonuç Label'ı
-result_label = tk.Label(root, text="Lütfen durak seçiniz...", font=("Consolas", 14, "bold"), fg="#00FF00", bg="black", wraplength=1000)
-result_label.pack(pady=10)
-
-# --- MATPLOTLIB GRAFİK ALANI ---
-fig, ax = plt.subplots(figsize=(14, 7))
-fig.patch.set_facecolor('black')
-ax.set_facecolor('black')
-
-canvas = FigureCanvasTkAgg(fig, master=root)
-canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
-
-def draw_graph(path=[]):
-    ax.clear()
-    ax.set_aspect('equal')
-    ax.axis('off')
-
-    # Senin graph yapında adj_list formatı: {from_id: {to_id: duration}}
-    # ve stations formatı: {id: StationObj}
-
-    drawn_edges = set()
-
-    # 1. Hatları Çiz
-    for from_id, neighbors in g.adj_list.items():
-        start_node = g.stations[from_id]
-        sx, sy = start_node.location
-
-        for to_id, duration in neighbors.items():
-            end_node = g.stations[to_id]
-            nx, ny = end_node.location
-
-            # Çizgiyi tek sefer çizmek için kontrol
-            edge_key = tuple(sorted((from_id, to_id)))
-            if edge_key not in drawn_edges:
-                ax.plot([sx, nx], [sy, ny], color='#00FFFF', linewidth=2, alpha=0.5, zorder=1) # Cyan renk
-                drawn_edges.add(edge_key)
-
-    # 2. Durakları Çiz
-    for station in g.stations.values():
-        x, y = station.location
-        # Beyaz nokta
-        ax.plot(x, y, 'o', color='white', markersize=6, zorder=5)
-        # İsim (M5 vb detayları atıp sadece ismi yazabiliriz veya hepsini yazabiliriz)
-        display_name = station.name.split('(')[0].strip()
-        ax.text(x + 0.4, y + 0.4, display_name, color='white', fontsize=8, zorder=10)
-
-    # 3. Rota Varsa Üzerine Çiz
-    if path:
-        path_x = []
-        path_y = []
-        for sid in path:
-            st = g.stations[sid]
-            path_x.append(st.location[0])
-            path_y.append(st.location[1])
+        # 1. SİSTEMLERİN BAŞLATILMASI
+        self.graph = Graph()
+        self.trie = Trie()
+        self.history_stack = Stack()
         
-        # Rotayı Kırmızı Çiz
-        ax.plot(path_x, path_y, color='red', linewidth=4, alpha=0.9, zorder=6)
-        ax.plot(path_x, path_y, 'o', color='red', markersize=8, zorder=7)
+        # Veriyi yükle (main.py'den bağımsız çalışabilmesi için burada da yüklüyoruz)
+        try:
+            self.raw_data = load_metro_data("data/stations.json", self.graph, self.trie)
+            if not self.raw_data: raise Exception("Veri boş")
+        except:
+            print("Veri yüklenemedi, ui.py tek başına çalıştırılmış olabilir.")
+            self.raw_data = {'stations': []} # Boş veri ile başlat ki çökmesin
 
-    canvas.draw()
+        # İstasyon isimlerini sırala
+        raw_names = [s['name'] for s in self.raw_data['stations']]
+        self.sorted_stations = sorted(raw_names)
 
-def find_path():
-    try:
-        s_name = start_var.get()
-        e_name = end_var.get()
+        # Koordinatları hızlı çekmek için bir sözlük: {'İsim': (x, y)}
+        self.coords = {s['name']: (s['x_loc'], s['y_loc']) for s in self.raw_data['stations']}
+
+        self.setup_ui()
+
+    def setup_ui(self):
+        # --- ÜST PANEL (SEÇİMLER) ---
+        top_frame = tk.Frame(self.root, bg='black', highlightbackground="#333", highlightthickness=1)
+        top_frame.pack(side=tk.TOP, fill=tk.X, pady=10, padx=10)
+
+        # Başlangıç (Trie Destekli)
+        tk.Label(top_frame, text="NEREDEN:", font=("Consolas", 12, "bold"), fg="#00FF00", bg="black").pack(side=tk.LEFT, padx=10)
+        self.start_combo = ttk.Combobox(top_frame, values=self.sorted_stations, width=30)
+        self.start_combo.pack(side=tk.LEFT, padx=5)
+        # Her tuş bırakıldığında Trie kontrolü yap
+        self.start_combo.bind('<KeyRelease>', lambda e: self.check_trie(e, self.start_combo))
+
+        # Bitiş (Trie Destekli)
+        tk.Label(top_frame, text="NEREYE:", font=("Consolas", 12, "bold"), fg="#FF0000", bg="black").pack(side=tk.LEFT, padx=10)
+        self.end_combo = ttk.Combobox(top_frame, values=self.sorted_stations, width=30)
+        self.end_combo.pack(side=tk.LEFT, padx=5)
+        self.end_combo.bind('<KeyRelease>', lambda e: self.check_trie(e, self.end_combo))
+
+        # Butonlar
+        tk.Button(top_frame, text="EN HIZLI (Dijkstra)", command=self.calculate_dijkstra, bg="#0055ff", fg="white", font=("Arial", 10, "bold")).pack(side=tk.LEFT, padx=10)
+        tk.Button(top_frame, text="EN AZ DURAK (BFS)", command=self.calculate_bfs, bg="#ffaa00", fg="black", font=("Arial", 10, "bold")).pack(side=tk.LEFT, padx=10)
+
+        # --- ORTA ALAN (HARİTA VE GEÇMİŞ) ---
+        main_frame = tk.Frame(self.root, bg='black')
+        main_frame.pack(fill=tk.BOTH, expand=True)
+
+        # SOL: GEÇMİŞ PANELİ (STACK)
+        history_frame = tk.Frame(main_frame, bg='#111', width=250, highlightbackground="#444", highlightthickness=1)
+        history_frame.pack(side=tk.LEFT, fill=tk.Y, padx=10, pady=5)
+        tk.Label(history_frame, text="GEÇMİŞ ARAMALAR\n(Tekrar çizmek için tıkla)", font=("Consolas", 10, "bold"), fg="cyan", bg="#111").pack(pady=5)
         
-        if not s_name or not e_name:
-            result_label.config(text="Lütfen iki durak seçin!", fg="red")
+        # Listbox ve Scrollbar
+        list_scroll = tk.Scrollbar(history_frame)
+        list_scroll.pack(side=tk.RIGHT, fill=tk.Y)
+        
+        self.history_listbox = tk.Listbox(history_frame, bg='black', fg='cyan', font=("Consolas", 9), borderwidth=0, highlightthickness=0, yscrollcommand=list_scroll.set)
+        self.history_listbox.pack(fill=tk.BOTH, expand=True, padx=5, pady=5)
+        
+        list_scroll.config(command=self.history_listbox.yview)
+        
+        # DÜZELTME 4: Stack'e tıklayınca rotayı tekrar çiz
+        self.history_listbox.bind('<<ListboxSelect>>', self.on_history_click)
+
+
+        # SAĞ: HARİTA (MATPLOTLIB)
+        # Figure oluştururken facecolor'ı siyah yapıyoruz
+        self.fig = Figure(figsize=(10, 6), facecolor='black')
+        self.ax = self.fig.add_subplot(111)
+        self.ax.set_facecolor('black')
+        
+        self.canvas = FigureCanvasTkAgg(self.fig, master=main_frame)
+        self.canvas.get_tk_widget().pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
+
+        # ALT: SONUÇ PANELİ
+        self.result_label = tk.Label(self.root, text="Sistem Hazır. Lütfen durak seçiniz...", font=("Consolas", 12), fg="#00FF00", bg="black", wraplength=1300)
+        self.result_label.pack(side=tk.BOTTOM, pady=10, fill=tk.X)
+
+        # İlk açılışta boş haritayı çiz
+        self.draw_map()
+
+    # --- DÜZELTME 2: Trie Anlık Arama ---
+    def check_trie(self, event, combo):
+        """Kullanıcı yazdıkça Trie üzerinden öneri sunar ve listeyi açar."""
+        # Enter, yön tuşları gibi tuşlarda tetiklenme
+        if event.keysym in ['Return', 'Down', 'Up', 'Left', 'Right']:
             return
 
-        start_id = name_to_id[s_name]
-        end_id = name_to_id[e_name]
-
-        # Senin graph.py içindeki metodun: return path, distances[end_node].
-        path, cost = g.shortest_path(start_id, end_id)
-
-        if cost == float('inf'):
-            result_label.config(text="Rota bulunamadı!", fg="red")
+        typed_text = combo.get()
+        
+        if typed_text == '':
+            combo['values'] = self.sorted_stations
         else:
-            # İsimleri al
-            path_names = [g.stations[sid].name for sid in path]
-            route_str = " -> ".join(path_names)
-            result_label.config(text=f"ROTA BULUNDU ({cost} dk)\n{route_str}", fg="#00FF00")
-            draw_graph(path)
+            # Trie'den önerileri al
+            suggestions = self.trie.get_suggestions(typed_text)
+            if suggestions:
+                combo['values'] = suggestions
+                # KRİTİK DÜZELTME: Listeyi programatik olarak aç
+                combo.event_generate('<Down>') 
+            else:
+                 # Öneri yoksa listeyi boşalt ama yazdığı kalsın
+                combo['values'] = []
 
-    except Exception as e:
-        result_label.config(text=f"Hata: {e}", fg="red")
-        print(f"UI Hatası: {e}")
+    # --- DÜZELTME 4: Geçmişe Tıklama ---
+    def on_history_click(self, event):
+        """Listbox'tan bir öğeye tıklandığında rotayı tekrar hesaplar ve çizer."""
+        selection = event.widget.curselection()
+        if selection:
+            index = selection[0]
+            data = event.widget.get(index) # Örn: "Kadikoy(M4) -> Sabiha Gokcen(M4)"
+            
+            try:
+                start, end = data.split(" -> ")
+                # Hızlıca tekrar hesapla (Dijkstra varsayalım görselleştirme için)
+                finder = PathFinder()
+                path, cost = finder.dijkstra(self.graph, start, end)
+                if path:
+                    self.update_result(path, f"Geçmişten Yüklendi: {cost} dk (Dijkstra)", "cyan")
+                    # Comboboxları da güncelle
+                    self.start_combo.set(start)
+                    self.end_combo.set(end)
+            except:
+                pass # Hatalı format varsa görmezden gel
 
-# Buton
-btn_find = tk.Button(top_frame, text="ROTAYI HESAPLA", command=find_path, 
-                     bg="red", fg="white", font=("Arial", 12, "bold"), padx=10)
-btn_find.pack(side=tk.LEFT, padx=30)
+    def calculate_dijkstra(self):
+        start = self.start_combo.get()
+        end = self.end_combo.get()
+        
+        if start not in self.coords or end not in self.coords:
+             self.result_label.config(text="HATA: Lütfen listeden geçerli duraklar seçiniz!", fg="red")
+             return
 
-# İlk açılışta boş haritayı çiz
-draw_graph()
+        finder = PathFinder()
+        # Burada hata yakalama ekleyelim
+        try:
+            path, cost = finder.dijkstra(self.graph, start, end)
+            if path:
+                self.update_result(path, f"En Hızlı Yol: {cost} dk", "#00FF00")
+                self.add_to_history(f"{start} -> {end}")
+            else:
+                self.result_label.config(text="Rota bulunamadı!", fg="red")
+        except Exception as e:
+             self.result_label.config(text=f"Hata oluştu: {e}", fg="red")
+
+    def calculate_bfs(self):
+        start = self.start_combo.get()
+        end = self.end_combo.get()
+
+        if start not in self.coords or end not in self.coords:
+             self.result_label.config(text="HATA: Lütfen listeden geçerli duraklar seçiniz!", fg="red")
+             return
+             
+        path = find_path_bfs(self.graph, start, end)
+        
+        if path:
+            self.update_result(path, f"En Az Durak: {len(path)} İstasyon", "orange")
+            self.add_to_history(f"{start} -> {end}")
+        else:
+            self.result_label.config(text="Rota bulunamadı!", fg="red")
+
+    def update_result(self, path, info, color):
+        # Rota stringini oluştur
+        route_str = ' -> '.join(path)
+        self.result_label.config(text=f"{info}\n{route_str}", fg=color)
+        self.draw_map(path)
+
+    def add_to_history(self, entry):
+        # Stack'e ekle
+        self.history_stack.push(entry)
+        # Listbox'ı güncelle
+        self.history_listbox.delete(0, tk.END)
+        # Stack'i tersten yazdır ki en son arama en üstte olsun
+        for item in reversed(self.history_stack.items[-15:]): # Son 15 arama
+            self.history_listbox.insert(tk.END, item)
+
+    def draw_map(self, path=[]):
+        self.ax.clear()
+        self.ax.axis('off')
+
+        # Tüm Hatları Çiz (Arka plan çizgileri - Cyan)
+        drawn_edges = set()
+        for u, neighbors in self.graph.adj_list.items():
+            if u not in self.coords: continue
+            ux, uy = self.coords[u]
+            for v, _ in neighbors:
+                if v not in self.coords: continue
+                vx, vy = self.coords[v]
+                
+                edge = tuple(sorted((u, v)))
+                if edge not in drawn_edges:
+                    self.ax.plot([ux, vx], [uy, vy], color='#00FFFF', alpha=0.2, linewidth=1, zorder=1)
+                    drawn_edges.add(edge)
+
+        # --- DÜZELTME 1: Durak İsimleri (Labels) ---
+        for name, (x, y) in self.coords.items():
+            # Durağı çiz
+            self.ax.plot(x, y, 'o', color='white', markersize=4, alpha=0.6, zorder=2)
+            # İsmi yaz (x'in biraz sağına, y'nin biraz yukarısına)
+            # İsmin sadece ilk kısmını alalım ki harita boğulmasın (örn: "Kadıköy(M4)" -> "Kadıköy")
+            display_name = name.split('(')[0]
+            self.ax.text(x + 0.5, y + 0.5, display_name, color='white', fontsize=7, alpha=0.8, zorder=3)
+
+
+        # --- DÜZELTME 3: Kırmızı Rota Çizgileri ---
+        if path:
+            # 1. Rota üzerindeki durakları kırmızı nokta yap
+            px = [self.coords[node][0] for node in path]
+            py = [self.coords[node][1] for node in path]
+            self.ax.plot(px, py, 'o', color='#FF0000', markersize=7, zorder=5)
+
+            # 2. Rota üzerindeki yolları segment segment çiz (Daha güvenli)
+            for i in range(len(path) - 1):
+                u_node = path[i]
+                v_node = path[i+1]
+                ux, uy = self.coords[u_node]
+                vx, vy = self.coords[v_node]
+                # İki nokta arasına kırmızı çizgi çek
+                self.ax.plot([ux, vx], [uy, vy], color='#FF0000', linewidth=3, zorder=4)
+
+        self.canvas.draw()
+
+if __name__ == "__main__":
+    # ui.py tek başına çalıştırılırsa diye bir önlem
+    root = tk.Tk()
+    app = MetroUI(root)
+    root.mainloop()

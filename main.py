@@ -1,25 +1,45 @@
-from src.algorithms.graph import graph
-from src.ui import root 
+import tkinter as tk
+from src.ui import MetroUI  # Yeni hazırladığımız arayüzü çağırıyoruz
+from src.data_structures.graph import Graph
+from src.data_structures.trie import Trie
+from src.utils.data_loader import load_metro_data
 
-g = graph()
-g.load_from_json("data/stations.json")
+def main():
+    """
+    Programın ana giriş noktası. 
+    Arka plan sistemlerini hazırlar ve Kullanıcı Arayüzünü (UI) başlatır.
+    """
+    
+    # 1. TEMEL YAPILARIN OLUŞTURULMASI
+    # Bu yapılar program açık olduğu sürece veriyi hafızada tutacak.
+    metro_sistemi = Graph()
+    arama_motoru = Trie()
+    
+    # 2. VERİ YÜKLENMESİ
+    # JSON dosyasındaki durakları ve yolları Graph ve Trie içine pompalıyoruz.
+    json_yolu = "data/stations.json"
+    
+    print("========================================")
+    print("🚉 METRO SİSTEMİ BAŞLATILIYOR...")
+    print("========================================")
+    
+    # Veri yükleme işlemi
+    data = load_metro_data(json_yolu, metro_sistemi, arama_motoru)
+    
+    if data is None:
+        print("❌ HATA: Veriler yüklenemediği için program başlatılamıyor!")
+        return
 
-print("Graf Yüklendi.")
+    print(f"✅ Başarılı: {len(data['stations'])} durak sisteme yüklendi.")
+    print("🚀 Arayüz (UI) açılıyor...")
 
-# --- DÜZELTİLEN KISIM ---
-# ID'leri JSON dosyasındaki mevcut ID'lerden seçtik
-# 501: Üsküdar (M5)
-# 112: Sabiha Gökçen (M4)
-start = 501 
-end = 112   
-
-# Hata kontrolü ekleyelim ki program patlamasın
-if g.has_station(start) and g.has_station(end):
-    path, cost = g.shortest_path(start, end)
-    print(f"\nShortest path from {start} to {end}: {path}")
-    print(f"Total cost: {cost}")
-else:
-    print("\nHATA: Seçilen ID'ler JSON dosyasında bulunamadı!")
+    # 3. KULLANICI ARAYÜZÜNÜN (UI) BAŞLATILMASI
+    # Tkinter ana penceresini oluşturup kontrolü MetroUI sınıfına devrediyoruz.
+    root = tk.Tk()
+    app = MetroUI(root)
+    
+    # Pencere kapanana kadar programın çalışmasını sağlar
+    root.mainloop()
 
 if __name__ == "__main__":
-    root.mainloop()
+    main()
