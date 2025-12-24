@@ -1,4 +1,4 @@
-from src.graph import graph
+from src.algorithms.graph import graph
 from src.ui import root 
 
 g = graph()
