@@ -1,7 +1,7 @@
 from collections import deque
 
 #İki node arasındaki en kısa yolu bulan algoritmamız
-#Kuyruk veri yapısıyla çalışıyoruz çünkü ilk giren node ilk çıkar  A-B-C
+#Kuyruk veri yapısıyla çalışıyoruz çünkü sıradaki duragı çıkarıyoruz. (en öndeki eleman). yeni eklediğimiz durakları sona atıyoruz
 def find_path_bfs(graph, start_node, end_node):
     #Başlangıç ve bitiş aynı node ise hemen döndür
     if start_node == end_node:
@@ -15,12 +15,12 @@ def find_path_bfs(graph, start_node, end_node):
     #Set veri yapısı kullandık ki O(1) hızında ziyaret edildi mi edilmedi mi bilenilelim Arka planda HashTable veri yapısı kullanır 
     visited = {start_node}
 
-
+    #kuyruk dolu oldugu surece calıs
     while queue:
         #Tuple veri yapısıyla verileri tutan kuyruktan sıranın en basındaki node ve mevcut yolu tutan listeyi çekiyoruz
         current_node, path = queue.popleft()
 
-        #Hedefe varsıysak döngü bitti , yolu döndürdük
+        #Hedefe vardıysak döngü bitti , yolu döndürdük
         if current_node == end_node:
             return path
         
@@ -33,3 +33,17 @@ def find_path_bfs(graph, start_node, end_node):
                 queue.append((neighbor, path + [neighbor]))
 
     return None
+
+
+"""
+
+2. KUYRUK (QUEUE) TRAFİĞİ:
+[ A ]           <-- A siraya girdi.
+[ B, C ]        <-- A çikti; komşuları B ve C arkaya girdi.
+[ C, D ]        <-- B çikti; komşusu D, C'nin arkasına girdi.
+[ D ]           <-- C çikti; (C'nin altı yok).
+[ ]             <-- D çikti; HEDEF BULUNDU!
+
+
+"""
+
