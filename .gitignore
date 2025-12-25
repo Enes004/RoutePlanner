@@ -1,0 +1,18 @@
+# Sanal ortam
+venv/
+.venv/
+env/
+
+# Python geçici dosyaları
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Test araçları
+.pytest_cache/
+.tox/
+.coverage
+htmlcov/
+
+# VS Code ayarları
+.vscode/
