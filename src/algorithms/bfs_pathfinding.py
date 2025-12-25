@@ -12,7 +12,7 @@ def find_path_bfs(graph, start_node, end_node):
     queue = deque([(start_node, [start_node])])
 
     #Ziyaret edilenleri not etmek için bir küme oluşturduk.
-    #Set veri yapısı kullandık ki O(1) hızında ziyaret edildi mi edilmedi mi bilenilelim Arka planda HashTable veri yapısı kullanır 
+    #Set veri yapısı kullandık ki O(1) hızında ziyaret edildi mi edilmedi mi bilebilelim Arka planda HashTable veri yapısı kullanır 
     visited = {start_node}
 
     #kuyruk dolu oldugu surece calıs
