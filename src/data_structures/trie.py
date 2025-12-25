@@ -49,6 +49,7 @@ class Trie:
         return True
     
 
+    #Girilen prefixe kadar gelir ve dfs'i çağırır
     def get_suggestions(self, prefix):
         current = self.root
         
@@ -61,10 +62,11 @@ class Trie:
         self._dfs(current, prefix, results)
         return results
     
-    def _dfs(self, node, path, results):
+    # en derine kadar iner ve kelimeleri toplar
+    def _dfs(self, node, path, results): #node son harfi , path suffixi , resultsta kelimeleri tutar
         if node.is_end_of_word:
             results.append(path) #path = tüm harfler yani kelimeler
             
         for char in sorted(node.children.keys()): # A,K,Ü,M hepsini ayır ve hepsi için ayrı ayrı çalıştır aşağıdaki kodu
 
-            self._dfs(node.children[char], path + char, results)
+            self._dfs(node.children[char], path + char, results) #cat için t,ca-t,cat
