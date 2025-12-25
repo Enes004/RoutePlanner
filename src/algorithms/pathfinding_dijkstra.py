@@ -9,12 +9,17 @@ class PathFinder:
         if start_node not in graph_obj.adj_list or end_node not in graph_obj.adj_list:
             return None, float('inf')
 
+        #Başlangıçta tüm değerleri sonsuz yapalım
         distances = {node: float('inf') for node in graph_obj.adj_list}
+        #Başlangıc agırlıgımız 0
         distances[start_node] = 0
+        #Önceki nodeları tutalım
         previous_nodes = {node: None for node in graph_obj.adj_list}
+        #Öncelik kuyrugunu oluşturduk
         priority_queue = [(0, start_node)]
 
         while priority_queue:
+            #Heapq her zaman en düşük ağırlıklı komşuyu bize getirir.
             curr_weight, curr_node = heapq.heappop(priority_queue)
 
             if curr_weight > distances[curr_node]:
@@ -22,12 +27,15 @@ class PathFinder:
             if curr_node == end_node:
                 break
 
-            # DÜZELTME: .items() silindi çünkü get_neighbors bir liste döndürüyor
             for neighbor, weight in graph_obj.get_neighbors(curr_node):
                 new_dist = curr_weight + weight
+                #Eğer bulunan yeni süre eskisinden daha büyükse
                 if new_dist < distances[neighbor]:
+                    #Mesafeyi güncelle
                     distances[neighbor] = new_dist
+                    #İz bırak
                     previous_nodes[neighbor] = curr_node
+                    #yeni yolu listeye ekler
                     heapq.heappush(priority_queue, (new_dist, neighbor))
 
         path = []
