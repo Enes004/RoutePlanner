@@ -2,6 +2,12 @@ import pytest
 import sys
 import os
 
+
+# Unit Test: Fonksiyonları izole bir şekilde test ederek yan etkileri (side effects) önlüyoruz.
+# Edge Case: Başlangıç ve bitişin aynı olması gibi uç durumları kontrol ediyoruz.
+# Regression Testing: Yeni özellik eklediğimizde eski algoritmaların bozulmadığından emin oluyoruz.
+
+
 # Testlerin 'src' klasöründeki kodları görebilmesi için yolu ekliyoruz
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
@@ -9,10 +15,8 @@ from src.algorithms.bfs_pathfinding import find_path_bfs
 from src.algorithms.pathfinding_dijkstra import PathFinder
 from src.data_structures.trie import Trie
 
-# --- TEST EDİLECEK SINIF VE FONKSİYONLARIN BURADA OLDUĞUNU VARSAYIYORUZ ---
-# (Gerçek projende bunları: from main import find_path_bfs, PathFinder, Trie şeklinde import etmelisin)
 
-# Testler için yardımcı bir Graph sınıfı (Senin kodundaki get_neighbors yapısına uygun)
+# Testler için yardımcı bir Graph sınıfı oluşturuyoruz. Olası bir graph yapısında hata olsa bile burada kontrollü ve doğru bir yapı kuruyoruz.
 class MockGraph:
     def __init__(self, adj_list):
         self.adj_list = adj_list
@@ -30,16 +34,20 @@ def test_bfs_shortest_path():
     graph = MockGraph(adj)
     # A -> D için en kısa yolu bulmalı
     assert find_path_bfs(graph, 'A', 'D') == ['A', 'B', 'D'] or ['A', 'C', 'D']
+    # A-B-C-D yaparsa en kısa yol olmaz bunu test ediyor
 
+#Edge Case
 def test_bfs_same_start_end():
     graph = MockGraph({'A': []})
     assert find_path_bfs(graph, 'A', 'A') == ['A']
+    #A dan A ya en kısa yol A dır
 
+#Edge case
 def test_bfs_no_path():
     graph = MockGraph({'A': [], 'B': []})
     assert find_path_bfs(graph, 'A', 'B') is None
 
-# 2. DIJKSTRA TESTLERİ (En Ucuz Yol - Ağırlıklı)
+# 2. DIJKSTRA TESTLERİ 
 def test_dijkstra_weighted_path():
     adj = {
         'A': [('B', 10), ('C', 1)],
@@ -52,13 +60,14 @@ def test_dijkstra_weighted_path():
     assert path == ['A', 'C', 'B']
     assert distance == 2
 
+#Yol yoksa inf dön
 def test_dijkstra_unreachable():
     graph = MockGraph({'A': [], 'B': []})
     finder = PathFinder()
     path, distance = finder.dijkstra(graph, 'A', 'B')
     assert distance == float('inf')
 
-# 3. TRIE TESTLERİ (Kelime ve Öneri Arama)
+# 3. TRIE TESTLERİ 
 def test_trie_insert_and_search():
     trie = Trie()
     trie.insert("kadıköy")
