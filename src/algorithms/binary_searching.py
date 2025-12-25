@@ -1,4 +1,6 @@
 
+# Quick sortla sıraladıgımız istasyonlara tıkladıgımızda seçilen istasyonun bilgilerini karışık json dosyasından bulup getirir
+
 class StationSearcher:
     def __init__(self):
         pass
