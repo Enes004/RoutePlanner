@@ -1,5 +1,5 @@
 import tkinter as tk
-from src.ui import MetroUI  # Yeni hazırladığımız arayüzü çağırıyoruz
+from src.ui import MetroUI  
 from src.data_structures.graph import Graph
 from src.data_structures.trie import Trie
 from src.utils.data_loader import load_metro_data
@@ -20,7 +20,7 @@ def main():
     json_yolu = "data/stations.json"
     
     print("========================================")
-    print("🚉 METRO SİSTEMİ BAŞLATILIYOR...")
+    print("METRO SİSTEMİ BAŞLATILIYOR...")
     print("========================================")
     
     # Veri yükleme işlemi
