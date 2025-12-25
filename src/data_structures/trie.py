@@ -1,7 +1,7 @@
 class TrieNode:
     def __init__(self):
-        self.children = {}
-        self.is_end_of_word = False
+        self.children = {} # Durak ismini (key) verip komşularını (value) jet hızıyla almak için dict kullandık.
+        self.is_end_of_word = False #kelimenin sonuna geldiysek kelime oldugunu ayırt etmemiz için.  ->((CAT)EGORIZE)
 
 class Trie:
     def __init__(self):
@@ -12,12 +12,13 @@ class Trie:
         current = self.root
 
         for char in word:
-            if char not in current.children:
-                current.children[char] = TrieNode()
+            #cat için düşünürsek
+            if char not in current.children: #c-a-t
+                current.children[char] = TrieNode() #root-c-a-t
 
-            current = current.children[char]    
+            current = current.children[char]    #current = c-a-t
 
-        current.is_end_of_word = True
+        current.is_end_of_word = True  #cat = kelime oldu
 
 
     def search(self, word):
@@ -33,7 +34,7 @@ class Trie:
         return current.is_end_of_word
     
 
-    def starts_with(self, prefix):
+    def starts_with(self, prefix): # Uskudarın USK unu girdiysek eğer
 
         current = self.root
     
