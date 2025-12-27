@@ -38,7 +38,7 @@ def main():
     root = tk.Tk()
     app = MetroUI(root)
     
-    # Pencere kapanana kadar programın çalışmasını sağlar
+    # Pencere kapanana kadar programın çalışmasını sağlar.
     root.mainloop()
 
 if __name__ == "__main__":
