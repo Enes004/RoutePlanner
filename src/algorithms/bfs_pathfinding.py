@@ -3,7 +3,7 @@ from collections import deque
 #İki node arasındaki en kısa yolu bulan algoritmamız
 #Kuyruk veri yapısıyla çalışıyoruz çünkü sıradaki duragı çıkarıyoruz. (en öndeki eleman). yeni eklediğimiz durakları sona atıyoruz
 def find_path_bfs(graph, start_node, end_node):
-    #Başlangıç ve bitiş aynı node ise hemen döndür
+    #Başlangıç ve bitiş aynı node ise hemen döndür.
     if start_node == end_node:
         return [start_node]
     
