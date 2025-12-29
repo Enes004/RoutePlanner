@@ -20,7 +20,7 @@ def find_path_bfs(graph, start_node, end_node):
         #Tuple veri yapısıyla verileri tutan kuyruktan sıranın en basındaki node ve mevcut yolu tutan listeyi çekiyoruz
         current_node, path = queue.popleft()
 
-        #Hedefe vardıysak döngü bitti , yolu döndürdük
+        #Hedefe vardıysak döngü bitti , yolu döndürdük.
         if current_node == end_node:
             return path
         
