@@ -63,10 +63,10 @@ class Trie:
         return results
     
     # en derine kadar iner ve kelimeleri toplar
-    def _dfs(self, node, path, results): #node son harfi , path suffixi , resultsta kelimeleri tutar
+    def _dfs(self, node, path, results): #node şuanki harfi , path - buraya gelen kadarki harfler , resultsta kelimeleri tutar
         if node.is_end_of_word:
-            results.append(path) #path = tüm harfler yani kelimeler
+            results.append(path) #path = tüm harfler yani kelime
             
-        for char in sorted(node.children.keys()): # A,K,Ü,M hepsini ayır ve hepsi için ayrı ayrı çalıştır aşağıdaki kodu
+        for char in sorted(node.children.keys()): # KAD+ -(I VEYA E) önerilerin kullanıcıya alfabetik sırayla (A'dan Z'ye) gelmesini sağlamak için dalları alfabetik sırayla gezdim.
 
-            self._dfs(node.children[char], path + char, results) #cat için t,ca-t,cat
+            self._dfs(node.children[char], path + char, results) # REKÜRSİF KENDİNİ ÇAĞIR (KADI VE KADE İÇİN)
